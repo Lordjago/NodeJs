@@ -1,0 +1,24 @@
+{
+  "name": "nodeapp",
+  "version": "1.0.0",
+  "description": "Node Js Practice",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "start-server": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lordjago/Project.git"
+  },
+  "author": "Adegoke A O",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lordjago/Project/issues"
+  },
+  "homepage": "https://github.com/Lordjago/Project#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}

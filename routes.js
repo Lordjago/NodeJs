@@ -18,7 +18,7 @@ const requestHandler = (req, res) => {
         req.on('data', (chunk) => {
             body.push(chunk);
         });
-
+        // extrating the body of incoming request
         return req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
@@ -29,7 +29,6 @@ const requestHandler = (req, res) => {
             });
 
         });
-
 
     }
     res.setHeader('Content-Type', 'text/html');
