@@ -16,7 +16,6 @@ const requestHandler = (req, res) => {
     if (url === '/message' && method === 'POST') {
         const body = [];
         req.on('data', (chunk) => {
-            console.log(chunk);
             body.push(chunk);
         });
 
@@ -41,4 +40,21 @@ const requestHandler = (req, res) => {
     res.end();
 }
 
-module.exports = requestHandler;
+//exporting a single fucntion 
+//module.exports = requestHandler;
+
+//to export multiple function we can use
+module.exports = {
+    handler: requestHandler,
+    someText: "Hard core text"
+}
+
+//we can also have the abobe on a single line each as
+
+// module.exports.handler = requestHandler;
+// module.exports.someText = "Hard core text";
+
+//or by removing the module
+//exports.handler = requestHandler;
+//exports.someText = "Hard core text";
+
