@@ -6,7 +6,7 @@ const rootDir = require('../util/path');
 
 const router = express.Router();
 
-
+//slash route
 router.get('/', (req, res, next) => {
     res.sendFile(path.join(rootDir, 'public', 'index.html'));
 });
