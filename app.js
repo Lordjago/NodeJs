@@ -1,5 +1,7 @@
 const express = require('express');
 
+const path = require('path');
+
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -10,12 +12,14 @@ const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded( {extended: false} ));
 
-app.use(adminRoutes);
+app.use(express.static(path.join(__dirname, 'public'))); //serving file statically, it was used to serve css and js
+
+app.use('/admin',adminRoutes); // /admin was added to make only admin go this route
 
 app.use(shopRoutes);
 
 app.use('/',(req, res, next) => {
-   res.status(404).send("<h1>Page not Found!<h1/>");
+   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 
