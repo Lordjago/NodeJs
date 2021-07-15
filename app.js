@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 
 const shopRoutes = require('./routes/shop');
 
@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded( {extended: false} ));
 
 app.use(express.static(path.join(__dirname, 'public'))); //serving file statically, it was used to serve css and js
 
-app.use('/admin',adminRoutes); // /admin was added to make only admin go this route
+app.use('/admin',adminData.routes); // /admin was added to make only admin go this route
 
 app.use(shopRoutes);
 

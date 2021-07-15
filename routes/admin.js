@@ -6,6 +6,8 @@ const rootDir = require('../util/path');
 
 const router = express.Router();
 
+// const products = [];
+
 //admin/add-product => GET
 router.get('/add-product', (req, res, next) => {
     res.sendFile(path.join(rootDir, 'public', 'add-product.html'));
@@ -15,10 +17,10 @@ router.get('/add-product', (req, res, next) => {
 //admin/product => POST
 //use work for both get and past. we posting into /product so we change the user to post and it its get request we chnage it to get
 router.post('/product', (req, res, next) => {
-    console.log(req.body);
+   // products.push( {title: req.body.title } );
     res.redirect('/');
-    // res.send();
 
 });
 
-module.exports = router;
+exports.routes = router;
+// exports.products = products;
