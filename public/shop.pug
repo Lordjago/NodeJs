@@ -1,0 +1,18 @@
+extends layout/main-layout.pug 
+
+block content
+            if prods.length > 0
+                .grid
+                    each product in prods
+                        article.card.product-item
+                            header.card__header
+                                h1.product__title #{product.title}
+                            div.card__image
+                                img(src="/image/book.jpeg")
+                            div.card__content
+                                h2.product__price $19.99
+                                p.product__description A very interesting book about so many even more interesting things!
+                            .card__actions
+                                button.btn Add to Cart
+            else
+                h1 No Products

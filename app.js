@@ -4,7 +4,16 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 
+// const expressHbs = require('express-handlebars');
+
 const app = express();
+
+
+// app.engine('hbs', expressHbs());
+//Displaying Dynamic content
+app.set('view engine', 'ejs');
+
+app.set('views', 'public');
 
 const adminData = require('./routes/admin');
 
@@ -19,7 +28,7 @@ app.use('/admin',adminData.routes); // /admin was added to make only admin go th
 app.use(shopRoutes);
 
 app.use('/',(req, res, next) => {
-   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+   res.status(404).render('404', {pageTitle: "Page not Found"});
 });
 
 
@@ -32,4 +41,5 @@ app.use('/',(req, res, next) => {
 //listen in express js also create an htttp for us
 // so we can remove createServer and the http the one at the top or the one in server.js 
 //if we are working with express js in it
-app.listen(3000);
+const port = process.env.PORT || 3000;
+app.listen(port, console.log(`Listening on ${port}`));

@@ -6,21 +6,34 @@ const rootDir = require('../util/path');
 
 const router = express.Router();
 
-// const products = [];
+const products = [];
 
 //admin/add-product => GET
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'public', 'add-product.html'));
+    res.render('add-product', {
+        pageTitle: 'Add Product',
+        path: "/admin/add-product",
+        formCSS: true,
+        productCSS: true,
+        activeAddProduct: true
+    });
 
 });
 
 //admin/product => POST
 //use work for both get and past. we posting into /product so we change the user to post and it its get request we chnage it to get
-router.post('/product', (req, res, next) => {
-   // products.push( {title: req.body.title } );
-    res.redirect('/');
+router.post('/add-product', (req, res, next) => {
+    const product = req.body.title;
+    products.push({title: product});
+    // res.send(products);
+    console.log(products);
+    res.redirect('/'); 
 
 });
 
-exports.routes = router;
+module.exports = {
+    routes: router,
+    products: products
+}
+// exports.routes = router;
 // exports.products = products;
