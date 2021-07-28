@@ -15,21 +15,24 @@ app.set('view engine', 'ejs');
 
 app.set('views', 'public');
 
-const adminData = require('./routes/admin');
+// const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 
 const shopRoutes = require('./routes/shop');
+
+const errorController = require('./Controller/error');
 
 app.use(bodyParser.urlencoded( {extended: false} ));
 
 app.use(express.static(path.join(__dirname, 'public'))); //serving file statically, it was used to serve css and js
 
-app.use('/admin',adminData.routes); // /admin was added to make only admin go this route
+// app.use('/admin', adminData.routes);
+
+app.use('/admin', adminRoutes); // /admin was added to make only admin go this route
 
 app.use(shopRoutes);
 
-app.use('/',(req, res, next) => {
-   res.status(404).render('404', {pageTitle: "Page not Found"});
-});
+app.use('/', errorController.get404);
 
 
 // app.use((req, res, next) => {
