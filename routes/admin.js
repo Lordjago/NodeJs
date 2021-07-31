@@ -4,18 +4,23 @@ const path = require('path');
 
 const rootDir = require('../util/path');
 
-const productController = require('../Controller/productController');
+const adminController = require('../Controller/adminController');
 
 const router = express.Router();
 // const products = [];
 
 
 //admin/add-product => GET
-router.get('/add-product', productController.getAddProduct);
+router.get('/add-product', adminController.getAddProduct);
+
+//admin/product-list => GET
+router.get('/product-list', adminController.getAdminProductList);
 
 //admin/product => POST
 //use work for both get and past. we posting into /product so we change the user to post and it its get request we chnage it to get
-router.post('/add-product', productController.postAddProduct);
+router.post('/add-product', adminController.postAddProduct);
+
+// router.get('/product', adminController.getAdminProductList);
 
 // module.exports = {
 //     routes: router,
