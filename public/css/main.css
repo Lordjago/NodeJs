@@ -156,3 +156,6 @@ main {
 .form-control textarea:focus {
   outline-color: #00695c;
 }
+.centered {
+  text-align: center;
+}

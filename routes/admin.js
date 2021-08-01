@@ -4,7 +4,7 @@ const path = require('path');
 
 const rootDir = require('../util/path');
 
-const adminController = require('../Controller/adminController');
+const adminController = require('../controller/adminController');
 
 const router = express.Router();
 // const products = [];

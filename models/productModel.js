@@ -1,4 +1,7 @@
+// const products = []; // Storing Data in Array
+//Storing data suing file system
 const fs = require('fs');
+
 const path = require('path');
 
 const PATH_ = path.join(
@@ -25,16 +28,25 @@ module.exports = class Product {
         this.price = price;
     }
 
-    save() {
-        getProductsFromFile(products => {
-            products.push(this);
-            fs.writeFile(PATH_, JSON.stringify(products), err => {
-                console.log(err);
-            });
+save(){
+    // products.push(this);
+    this.id = Math.random().toString();
+    getProductsFromFile(products => {
+        products.push(this);
+        fs.writeFile(PATH_, JSON.stringify(products), (err) => {
+            console.log(err);
         });
-    }
+    });
+}
 
-    static fetchAll(callback) {
-        getProductsFromFile(callback);
+    static fetchAll(callback){
+    getProductsFromFile(callback);
+}
+
+    static findById(id, callback) {
+        getProductsFromFile(products => {
+            const product = products.find(p => p.id === id);
+            callback(product);
+        });
     }
 };
