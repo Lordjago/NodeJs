@@ -4,7 +4,7 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 
-// const expressHbs = require('express-handlebars');
+const db = require('./util/database');
 
 const app = express();
 
