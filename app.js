@@ -4,7 +4,7 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 const app = express();
 
@@ -34,15 +34,11 @@ app.use(shopRoutes);
 
 app.use('/', errorController.get404);
 
-
-// app.use((req, res, next) => {
-//     console.log("inside middleware");
-//     next(); //Allows request to continue to another middleware
-// });
-
-
-//listen in express js also create an htttp for us
-// so we can remove createServer and the http the one at the top or the one in server.js 
-//if we are working with express js in it
+sequelize
+    .sync()
+    .then(result => {
+        // console.log(result);
+        app.listen(port, console.log(`App Listening on ${port}`));
+    })
+    .catch(err => console.log(err));
 const port = process.env.PORT || 3000;
-app.listen(port, console.log(`App Listening on ${port}`));

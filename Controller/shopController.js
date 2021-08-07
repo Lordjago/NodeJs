@@ -4,47 +4,67 @@ const Cart = require('../model/cartController');
 
 //Index routes
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll()
-    .then(([rows]) => {
+    Product.findAll()
+    .then(products => {
         res.render('shop/index', {
-            prods: rows,
+            prods: products,
             pageTitle: 'My Shop',
             path: '/index',
-            hasProducts: rows.length > 0
+            hasProducts: products.length > 0
         });
-        // res.send(rows);
+        // res.send(products);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err)
+    })
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
-        .then(([rows, fileData]) => {
-            res.render('shop/products', {
-                prods: rows,
+    Product.findAll()
+    .then(products => {
+        res.render('shop/products', {
+                prods: products,
                 pageTitle: 'Product List',
                 path: '/product',
-                hasProducts: rows.length > 0,
+                hasProducts: products.length > 0,
                 activeShop: true,
                 productCSS: true
             });
-            // res.send(rows);
-        })
-        .catch(err => console.log(err));
+    })
+    .catch(err => {
+         console.log(err) 
+        });
 };
 
 exports.getProduct = (req, res, next) => {
     const parseId = req.params.productId;
-    Product.findById(parseId)
-    .then(([rows]) => {
+    // Product.findAll({where: {id: parseId} })
+    //     .then(product => {
+    //         res.render('shop/product-detail', {
+    //             product: product[0],
+    //             pageTitle: product[0].title,
+    //             path: '/product'
+    //         });
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+
+        //Or
+    Product.findByPk(parseId)
+    .then( product => {
         res.render('shop/product-detail', {
-            product: rows[0],
-            pageTitle: rows[0].title,
+            product: product,
+            pageTitle: product.title,
             path: '/product'
         });
-        // res.send(rows);
     })
+    .catch(err => {
+        console.log(err);
+    });
 };
+
+
 
 
 exports.getCart = (req, res, next) => {
