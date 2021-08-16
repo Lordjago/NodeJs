@@ -1,11 +1,12 @@
 const Product = require('../model/productModel');
 
-const Cart = require('../model/cartController');
+const User = require('../model/userModel');
 
 //Index routes
 exports.getIndex = (req, res, next) => {
-    Product.findAll()
-    .then(products => {
+    Product.find()
+        .then(products => {
+            console.log(products);
         res.render('shop/index', {
             prods: products,
             pageTitle: 'My Shop',
@@ -20,8 +21,12 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll()
-    .then(products => {
+    Product.find()
+    //puplate related fields and select which field is required
+    // .select('title price -_id imageUrl')
+    //     .populate('userId', 'name')
+        .then(products => {
+            console.log(products);
         res.render('shop/products', {
                 prods: products,
                 pageTitle: 'Product List',
@@ -51,7 +56,7 @@ exports.getProduct = (req, res, next) => {
     //     });
 
         //Or
-    Product.findByPk(parseId)
+    Product.findById(parseId)
     .then( product => {
         res.render('shop/product-detail', {
             product: product,
@@ -68,19 +73,53 @@ exports.getProduct = (req, res, next) => {
 
 
 exports.getCart = (req, res, next) => {
-    res.render('shop/cart', {
-        pageTitle: 'Cart',
-        path: '/cart'
-    });
-};
+    User.findById("6119537b13ff4f1ea48126fe")
+    .populate('cart.items.productId')
+    // .execPopulate()
+        .then((user) => {
+            console.log(user.cart.items);
+            const products = user.cart.items;
+            res.render('shop/cart', {
+                products: products,
+                pageTitle: 'Cart',
+                path: '/cart'
+            });
+});
+}
 
-exports.postCart = (req, res, next) => {
+exports.postCart = (req, res) => {
     const prodId = req.body.productId;
-    Product.findById(prodId, product => {
-        Cart.addProduct(prodId, product.price);
-    });
-    res.redirect('/cart');
+    User.findById("6119537b13ff4f1ea48126fe")
+        .then(user => {
+            console.log(user);
+            Product.findById(prodId)
+            .then((product) => {
+                return user.addToCart(product);
+                
+            })
+            
+            }).then((product) => {
+                res.redirect('/cart');
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
 };
+exports.postCartDeleteProduct = (req, res) => {
+    const prodId = req.body.productId;
+    User.findById("6119537b13ff4f1ea48126fe")
+        .then((user) => {
+            console.log(user);
+            return user.removeCartItem(prodId);
+        })
+        .then(() => {
+            res.redirect('/cart');
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
 
 exports.getOrder = (req, res, next) => {
     res.render('shop/order', {

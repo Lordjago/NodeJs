@@ -1,0 +1,24 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<ul class="list-group">
+  <li class="list-group-item">
+    <div class="checkbox">
+      <label><input type="checkbox"> Item 1</label>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="checkbox">
+      <label><input type="checkbox"> Item 2</label>
+    </div>
+  </li>
+  <button>Delete</button>
+</ul>
+
+<script>
+    $(document).ready(() => {
+        $(function () {
+            $('button').on("click", function () {
+                $("input[type=checkbox]:checked").closest("li").remove(); // $(this).remove(); to remove the checkbox only
+            });
+        });
+    })
+</script>

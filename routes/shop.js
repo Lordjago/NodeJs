@@ -10,17 +10,19 @@ const router = express.Router();
 
 //slash route
 router.get('/', shopController.getIndex);
-//product => GET
+// //product => GET
 router.get('/products', shopController.getProducts);
-//product-details => GET
+// //product-details => GET
 router.get('/products/:productId', shopController.getProduct);
-//Cart => GET
+// //Cart => GET
 router.get('/cart', shopController.getCart);
-//Cart => POST
+// //Cart => POST
 router.post('/cart', shopController.postCart);
-//Orders => GET
-router.get('/order', shopController.getOrder);
-//checkout => GET
-router.get('/checkout', shopController.getCheckout);
+//Delete item => POST
+router.post('/cart-delete-item', shopController.postCartDeleteProduct);
+// //Orders => GET
+// router.get('/order', shopController.getOrder);
+// //checkout => GET
+// router.get('/checkout', shopController.getCheckout);
 
 module.exports = router;
