@@ -57,7 +57,7 @@ const port = process.env.PORT || 3000;
 //     app.listen(port, console.log(`App Listening on ${port}`));
 // });
 mongoose
-    .connect('mongodb+srv://root:root@clustertest.adfbz.mongodb.net/Shop?retryWrites=true&w=majority')
+    .connect('')
     .then((result) => {
         User.findOne().then(user => {
             if(!user) {

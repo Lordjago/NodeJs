@@ -2,6 +2,8 @@ const Product = require('../model/productModel');
 
 const User = require('../model/userModel');
 
+const Order = require('../model/orderModel');
+
 //Index routes
 exports.getIndex = (req, res, next) => {
     Product.find()
@@ -97,10 +99,10 @@ exports.postCart = (req, res) => {
                 return user.addToCart(product);
                 
             })
-            
-            }).then((product) => {
+            .then((product) => {
                 res.redirect('/cart');
         })
+            })
         .catch((err) => {
             console.log(err);
         })
@@ -121,11 +123,48 @@ exports.postCartDeleteProduct = (req, res) => {
         })
 }
 
+exports.postOrder = (req, res, next) => {
+    User.findById("6119537b13ff4f1ea48126fe")
+        .populate('cart.items.productId')
+        .then((user) => {
+            console.log(user);
+           const products = user.cart.items.map(i => {
+               return { quantity: i.quantity, product: {...i.productId._doc} }
+           });
+            const order = new Order({
+                user: {
+                    name: user.name,
+                    userId: user
+                },
+                products: products
+        })
+        return order.save();
+    })
+    .then(() => {
+           return  User.findById("6119537b13ff4f1ea48126fe");
+           
+        })
+        .then((user)=> {
+            user.clearCart(); 
+            res.redirect('/order');
+        })
+        .catch(err => console.log(err));
+};
+
 exports.getOrder = (req, res, next) => {
-    res.render('shop/order', {
-        pageTitle: 'Order',
-        path: '/order'
-    });
+    User.findById("6119537b13ff4f1ea48126fe")
+        .then((user) => {
+            console.log(user._id);
+            Order.find({'user.userId': user._id })
+            .then((orders) => {
+                  res.render('shop/order', {
+                    orders: orders,
+                    pageTitle: 'Order',
+                    path: '/order'
+                });
+            });
+            });
+  
 };
 
 exports.getCheckout = (req, res, next) => {
