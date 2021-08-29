@@ -8,12 +8,13 @@ const Order = require('../model/orderModel');
 exports.getIndex = (req, res, next) => {
     Product.find()
         .then(products => {
-            console.log(products);
+            console.log(req.session.user);
         res.render('shop/index', {
             prods: products,
             pageTitle: 'My Shop',
             path: '/index',
-            hasProducts: products.length > 0
+            hasProducts: products.length > 0,
+            isLoggedIn: req.session.isLoggedIn
         });
         // res.send(products);
     })
@@ -34,8 +35,7 @@ exports.getProducts = (req, res, next) => {
                 pageTitle: 'Product List',
                 path: '/product',
                 hasProducts: products.length > 0,
-                activeShop: true,
-                productCSS: true
+                isLoggedIn: req.session.isLoggedIn
             });
     })
     .catch(err => {
@@ -63,7 +63,8 @@ exports.getProduct = (req, res, next) => {
         res.render('shop/product-detail', {
             product: product,
             pageTitle: product.title,
-            path: '/product'
+            path: '/product',
+            isLoggedIn: req.session.isLoggedIn
         });
     })
     .catch(err => {
@@ -75,16 +76,19 @@ exports.getProduct = (req, res, next) => {
 
 
 exports.getCart = (req, res, next) => {
+    // req.session.user
     User.findById("6119537b13ff4f1ea48126fe")
     .populate('cart.items.productId')
     // .execPopulate()
         .then((user) => {
+            console.log(req.session.user);
             console.log(user.cart.items);
             const products = user.cart.items;
             res.render('shop/cart', {
                 products: products,
                 pageTitle: 'Cart',
-                path: '/cart'
+                path: '/cart',
+                isLoggedIn: req.session.isLoggedIn
             });
 });
 }
@@ -97,10 +101,10 @@ exports.postCart = (req, res) => {
             Product.findById(prodId)
             .then((product) => {
                 return user.addToCart(product);
-                
+               
             })
-            .then((product) => {
-                res.redirect('/cart');
+            .then(() => {
+                 res.redirect('/cart');
         })
             })
         .catch((err) => {
@@ -160,7 +164,8 @@ exports.getOrder = (req, res, next) => {
                   res.render('shop/order', {
                     orders: orders,
                     pageTitle: 'Order',
-                    path: '/order'
+                      path: '/order',
+                      isLoggedIn: req.session.isLoggedIn
                 });
             });
             });
