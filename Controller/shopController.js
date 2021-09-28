@@ -8,7 +8,7 @@ const Order = require('../model/orderModel');
 exports.getIndex = (req, res, next) => {
     Product.find()
         .then(products => {
-            console.log(req.session.user);
+            // console.log(req.session.user);
         res.render('shop/index', {
             prods: products,
             pageTitle: 'My Shop',
@@ -82,7 +82,7 @@ exports.getCart = (req, res, next) => {
     // .execPopulate()
         .then((user) => {
             console.log(req.session.user);
-            console.log(user.cart.items);
+            // console.log(user.cart.items);
             const products = user.cart.items;
             res.render('shop/cart', {
                 products: products,

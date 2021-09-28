@@ -75,8 +75,8 @@ exports.getEditProduct = (req, res) => {
         product: product,
         pageTitle: 'Edit Product',
         path: "/admin/edit-product",
-            editing: editMode,
-            isLoggedIn: req.session.isLoggedIn
+        editing: editMode,
+        isLoggedIn: req.session.isLoggedIn
     });
     }). catch(err => {
         console.log(err);
