@@ -14,6 +14,10 @@ const config = require('./config');
 
 const session = require('express-session');
 
+const multer = require('multer');
+
+const flash = require('connect-flash');
+
 const mongoDBStore = require('connect-mongodb-session')(session);
 
 const MONGODB_URI = config.mongodb_uri;
@@ -21,6 +25,23 @@ const MONGODB_URI = config.mongodb_uri;
 const app = express();
 
 const csrfProtection = csrf();
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images')
+    } ,
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
 
 const store = new mongoDBStore({
     uri: MONGODB_URI,
@@ -39,13 +60,19 @@ const adminRoutes = require('./routes/admin');
 
 const shopRoutes = require('./routes/shop');
 
+const transactionRoutes = require('./routes/transaction');
+
 const authRoutes = require('./routes/auth');
 
 const errorController = require('./Controller/error');
 
 app.use(bodyParser.urlencoded( {extended: false} ));
 
-app.use(express.static(path.join(__dirname, 'public'))); //serving file statically, it was used to serve css and js
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
+
+//serving file statically, it was used to serve css and js
+app.use(express.static(path.join(__dirname, 'public'))); 
+app.use('/images',express.static(path.join(__dirname, 'images')));
 
 // using session
 app.use(session({
@@ -55,30 +82,32 @@ app.use(session({
     store: store
 })) 
 
-// app.use('/admin', adminData.routes);
+//Adding informmation that should follow evvery single mages 
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.session.isLoggedIn,
+    res.locals.csrfToken = req.csrfToken;
+    next();
+})
 
-// app.use((req, res, next) => {
-//     User.findById(req.session.user._id)
-//         .then(user => {
-//             req.user = user;
-//             next();
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         })
-
-// });
+app.use(flash())
 
 app.use('/admin', adminRoutes); // /admin was added to make only admin go this route
 
 app.use(shopRoutes);
 
+app.use(transactionRoutes);
+
 app.use(authRoutes);
 
-app.use(csrfProtection);
+// app.use(csrfProtection);
+
+app.use('/500', errorController.get500)
 
 app.use('/', errorController.get404);
 
+// app.use((error, req, res, next) => {
+//     res.redirect('/500')
+// })
 
 const port = process.env.PORT || 3000;
 
@@ -88,10 +117,12 @@ const port = process.env.PORT || 3000;
 mongoose
     .connect(MONGODB_URI, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     })
     .then((result) => {
-        app.listen(port, console.log(`App Listening on ${port}`));
+        console.log("Database Connected Successful");
+        app.listen(port, console.log(`Server up and running on port: {${port}}`));
     })
     .catch((err) => {
         console.log(err);

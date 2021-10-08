@@ -4,7 +4,7 @@ const isAuth = require('../middleware/is-auth');
 
 // const rootDir = require('../util/path');
 
-const shopController = require('../controller/shopController');
+const shopController = require('../controller/shop');
 
 const router = express.Router();
 
@@ -22,9 +22,11 @@ router.post('/cart', shopController.postCart);
 router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 // //Orders => GET
 router.get('/order', isAuth, shopController.getOrder);
+// //Orders => GET
+router.get('/orders/:orderId', isAuth, shopController.getInvoice);
 // //Orders => POST
 router.post('/create-order', isAuth, shopController.postOrder);
 // //checkout => GET
-// router.get('/checkout', shopController.getCheckout);
+router.get('/checkout', isAuth, shopController.getCheckout);
 
 module.exports = router;

@@ -15,7 +15,7 @@
                                     </h1>
                                 </header>
                                 <div class="card__image">
-                                    <img src="<%= product.imageUrl %>" alt="A Book">
+                                <img src="/<%= product.imageUrl %>" alt="A Book">
                                 </div>
                                 <div class="card__content">
                                     <p class="product__description">
@@ -26,18 +26,19 @@
                                     </h2>
                                 </div>
                                 <div class="card__actions">
-                                        <a href="/admin/edit-product/<%= product._id %>?edit=true">Edit</a>
-                                        <form action="/admin/delete-product" method="POST">
+                                            <a href="/admin/edit-product/<%= product._id %>?edit=true">Edit</a>
                                             <input type="hidden" name="productId" value="<%= product._id %>">
-                                            <button class="btn" type="submit">Delete</button>
-                                        </form>
+                                            <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
                                     </form>
                                 </div>
                             </article>
                             <% } %>
                     </div>
+                    <%- include('../includes/pagination.ejs', {currentPage: currentPage, prevPage: prevPage, nextPage: nextPage, lastPage:
+                        lastPage, hasNextPage: hasNextPage, hasPrevious: hasPrevious}) %>
                     <% } else { %>
                         <h1>No Product Found!</h1>
                         <% } %>
             </main>
             <%- include('../includes/footer.ejs') %>
+            <script src="../js/admin.js"></script>

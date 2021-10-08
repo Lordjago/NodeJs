@@ -1,0 +1,64 @@
+<%- include('../includes/header.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+
+    </head>
+
+    <body>
+    <%- include('../includes/nav.ejs') %>
+        <main>
+            <ul class="cart__item-list">
+                <% products.forEach(p=> { %>
+                    <li class="cart__item">
+                        <h1>
+                            <%= p.productId.title %>
+                        </h1>
+                        <h2>Quantity: <%= p.quantity %>
+                        </h2>
+                    </li>
+                    <% }) %>
+            </ul>
+            <div class="centered">
+                <h2>Total: NGN <%= totalSum %>
+                </h2>
+            </div>
+            <div class="centered">
+                <!-- <form id="paymentForm">
+                    <input type="email" id="email-address" value="<%= email %>" hidden>
+                    <input type="tel" id="amount" value="<%= totalSum %>" hidden>
+                    <button type="submit" onclick="payWithPaystack()" class="btn"> Pay </button>
+                </form> -->
+                <form action="/transaction/initialize" method="POST">
+                    <input type="email" id="email-address" value="<%= email %>" hidden>
+                    <input type="tel" id="amount" value="<%= totalSum %>" hidden>
+                    <button type="submit" class="btn">Proceed to Payment</button>
+                </form>
+            </div>
+        </main>
+    </body>
+    <!-- <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        const paymentForm = document.getElementById('paymentForm');
+        paymentForm.addEventListener("submit", payWithPaystack, false);
+        function payWithPaystack(e) {
+            e.preventDefault();
+            let handler = PaystackPop.setup({
+                key: 'pk_test_edd5c2bd6e0980a47429b9b744759b820e5212c3', // Replace with your public key
+                email: document.getElementById("email-address").value,
+                amount: document.getElementById("amount").value * 100,
+                currency: 'NGN',
+                ref: 'vs' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                // label: "Optional string that replaces customer email"
+                onClose: function () {
+                    // alert('Are you sure u want to cancel the transaction?');
+                    // window.location = "http://localhost:3000/verify_transaction.php?transaction=cancel" + response.reference;
+                },
+                callback: function (response) {
+                    // let message = 'Payment complete! Reference: ' + response.reference;
+                    // alert(message);
+                    window.location = "http://localhost:3000/order?transaction=success" + response.reference;
+                }
+            });
+            handler.openIframe();
+        }
+    </script> -->
+            <%- include('../includes/footer.ejs') %>
