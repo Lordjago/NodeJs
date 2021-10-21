@@ -2,7 +2,7 @@ const express = require('express');
 
 const isAuth = require('../middleware/is-auth');
 
-const adminController = require('../controller/admin');
+const adminController = require('../controller');
 
 const { check } = require("express-validator");
 
@@ -11,10 +11,10 @@ const router = express.Router();
 
 
 // admin/add-product => GET
-router.get('/add-product',  isAuth, adminController.getAddProduct);
+router.get('/add-product',  isAuth, adminController.admin.getAddProduct);
 
 // //admin/product-list => GET
-router.get('/product-list', isAuth, adminController.getAdminProductList);
+router.get('/product-list', isAuth, adminController.admin.getAdminProductList);
 
 // //admin/product => POST
 //use work for both get and past. we posting into /product so we change the user to post and it its get request we chnage it to get
