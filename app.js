@@ -8,8 +8,6 @@ const csrf = require('csurf');
 
 const bodyParser = require('body-parser');
 
-const User = require('./model/userModel');
-
 const mongoose = require('mongoose');
 
 const config = require('./config');
@@ -57,6 +55,14 @@ const store = new mongoDBStore({
 });
 
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
+
+//serving file statically, it was used to serve css and js
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //Displaying Dynamic content
 app.set('view engine', 'ejs');
@@ -83,13 +89,6 @@ const authRoutes = require('./routes/auth');
 
 const errorController = require('./controller/error');
 
-app.use(bodyParser.urlencoded( {extended: false} ));
-
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
-
-//serving file statically, it was used to serve css and js
-app.use(express.static(path.join(__dirname, 'public'))); 
-app.use('/images',express.static(path.join(__dirname, 'images')));
 
 // using session
 app.use(session({
