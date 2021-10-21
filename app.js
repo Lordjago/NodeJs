@@ -55,6 +55,9 @@ const store = new mongoDBStore({
 });
 
 
+
+app.use(express.json())
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
