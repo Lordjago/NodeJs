@@ -73,7 +73,7 @@ app.use(compression())
 
 app.use(morgan('combined', {stream: accessLogStream}))
 
-const adminRoutes = require('./routes/admin');
+// const adminRoutes = require('./routes/admin');
 
 const shopRoutes = require('./routes/shop');
 
@@ -81,7 +81,7 @@ const transactionRoutes = require('./routes/transaction');
 
 const authRoutes = require('./routes/auth');
 
-const errorController = require('./Controller/error');
+const errorController = require('./controller/error');
 
 app.use(bodyParser.urlencoded( {extended: false} ));
 
@@ -108,7 +108,7 @@ app.use((req, res, next) => {
 
 app.use(flash())
 
-app.use('/admin', adminRoutes); // /admin was added to make only admin go this route
+// app.use('/admin', adminRoutes); // /admin was added to make only admin go this route
 
 app.use(shopRoutes);
 
