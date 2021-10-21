@@ -1,0 +1,7 @@
+{
+    "env": {
+        "CONNECTION_STRING": "mongodb+srv://root:root@clustertest.adfbz.mongodb.net/Shop?retryWrites=true&w=majority",
+        "PAYSTACK_KEY": "sk_test_47c4fa53ab7cdc8f0c81f9b32c86d2f560525b25",
+        "NODE_ENV": "production" 
+    }
+}

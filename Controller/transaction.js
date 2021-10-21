@@ -19,7 +19,7 @@ exports.transactInit = (req, res, next) => {
         path: '/transaction/initialize',
         method: 'POST',
         headers: {
-            Authorization: 'Bearer sk_test_47c4fa53ab7cdc8f0c81f9b32c86d2f560525b25',
+            Authorization: `Bearer ${process.env.PAYSTACK_KEY}`,
             'Content-Type': 'application/json'
         },
         // csurf: "csrf-token"
@@ -55,7 +55,7 @@ exports.verifyTransact = (req, res) => {
         path: '/transaction/verify/:reference',
         method: 'GET',
         headers: {
-            Authorization: 'Bearer sk_test_47c4fa53ab7cdc8f0c81f9b32c86d2f560525b25'
+            Authorization: `Bearer ${process.env.PAYSTACK_KEY}`
         }
     }
     https.request(options, res => {
@@ -79,7 +79,7 @@ exports.getTransact = (req, res) => {
         path: '/transaction',
         method: 'GET',
         headers: {
-            Authorization: 'Bearer sk_test_47c4fa53ab7cdc8f0c81f9b32c86d2f560525b25'
+            Authorization: `Bearer ${process.env.PAYSTACK_KEY}`
         }
     }
     https.request(options, res => {
@@ -103,7 +103,7 @@ exports.transactById = (req, res) => {
         path: '/transaction/:id',
         method: 'GET',
         headers: {
-            Authorization: 'Bearer sk_test_47c4fa53ab7cdc8f0c81f9b32c86d2f560525b25'
+            Authorization: `Bearer ${process.env.PAYSTACK_KEY}`
         }
     }
     https.request(options, res => {

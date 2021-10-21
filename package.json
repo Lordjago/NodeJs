@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "Node Js Practice",
   "main": "app.js",
+  "engines": {
+    "node": "15.14.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "start-server": "node app.js"
+    "start": "node app.js",
+    "start-server": "node app.js",
+    "start:dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +28,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^3.0.0",
     "csurf": "^1.7.0",
@@ -34,8 +39,10 @@
     "express-router-group": "^0.1.4",
     "express-session": "^1.17.2",
     "express-validator": "^6.12.2",
+    "helmet": "^4.6.0",
     "mongodb": "^4.1.0",
     "mongoose": "^5.13.7",
+    "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "mysql2": "^2.2.5",
     "pdfkit": "^0.12.3",
