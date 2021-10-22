@@ -5,14 +5,7 @@ const isAuth = require('../middleware/is-auth');
 // const adminController = require('../controller/admin');
 // const adminController = require('../controller/admin')
 
-const {
-    getAddProduct,
-    getAdminProductList,
-    postAddProduct,
-    getEditProduct,
-    postEditProduct,
-    deleteProduct
-} = require('../controller/admin')
+const adminController = require('../controller/admin')
 
 
 const { check } = require("express-validator");
