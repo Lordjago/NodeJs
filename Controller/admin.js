@@ -6,7 +6,7 @@ const ITEMS_PER_PAGE = 4
 
 // const products = [];
 //Admin Add Product
-exports.getAddProduct = (req, res, next) => {
+getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', {
         pageTitle: 'Add Product',
         path: "/admin/add-product",
@@ -17,7 +17,7 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 //Admin getting product list
-exports.getAdminProductList = (req, res, next) => {
+getAdminProductList = (req, res, next) => {
     const page = +req.query.page || 1
     let totalItems;
     Product.find({ userId: req.session.user._id})
@@ -53,7 +53,7 @@ exports.getAdminProductList = (req, res, next) => {
 };
 
 //Admin Post 
-exports.postAddProduct = (req, res, next) => {
+postAddProduct = (req, res, next) => {
     const title = req.body.title;
     const image = req.file;
     const price = req.body.price;
@@ -120,7 +120,7 @@ exports.postAddProduct = (req, res, next) => {
 
 };
 
-exports.getEditProduct = (req, res, next) => {
+getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if(!editMode){
        return res.redirect('/');
@@ -148,7 +148,7 @@ exports.getEditProduct = (req, res, next) => {
     
 };
 
-exports.postEditProduct = (req, res, next) => {
+postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
     const image = req.file;
@@ -194,7 +194,7 @@ exports.postEditProduct = (req, res, next) => {
     
 };
 
-exports.deleteProduct = (req, res, next) => {
+deleteProduct = (req, res, next) => {
     const prodId = req.params.productId;
     Product.findById(prodId)
     .then((product) => {
@@ -211,4 +211,13 @@ exports.deleteProduct = (req, res, next) => {
         .catch(err => {
             res.status(500).json({message: "Deleting product failed"})
         })
+}
+
+module.exports = {
+    getAddProduct,
+    getAdminProductList,
+    postAddProduct,
+    getEditProduct,
+    postEditProduct,
+    deleteProduct
 }
