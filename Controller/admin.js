@@ -213,11 +213,17 @@ deleteProduct = (req, res, next) => {
         })
 }
 
-module.exports = {
-    getAddProduct,
-    getAdminProductList,
-    postAddProduct,
-    getEditProduct,
-    postEditProduct,
-    deleteProduct
-}
+// module.exports = {
+//     getAddProduct,
+//     getAdminProductList,
+//     postAddProduct,
+//     getEditProduct,
+//     postEditProduct,
+//     deleteProduct
+// }
+module.exports.getAddProduct = getAddProduct
+module.exports.getAdminProductList = getAdminProductList
+module.exports.postAddProduct = postAddProduct
+module.exports.getEditProduct = getEditProduct
+module.exports.postEditProduct = postEditProduct
+module.exports.deleteProduct = deleteProduct
