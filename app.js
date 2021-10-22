@@ -82,15 +82,15 @@ app.use(compression())
 
 app.use(morgan('combined', {stream: accessLogStream}))
 
-const adminRoutes = require('./routes/admin');
+// const adminRoutes = require('./routes/admin');
 
-const shopRoutes = require('./routes/shop');
+// const shopRoutes = require('./routes/shop');
 
-const transactionRoutes = require('./routes/transaction');
+// const transactionRoutes = require('./routes/transaction');
 
-const authRoutes = require('./routes/auth');
+// const authRoutes = require('./routes/auth');
 
-const errorController = require('./controller/error');
+// const errorController = require('./controller/error');
 
 
 // using session
@@ -110,19 +110,19 @@ app.use((req, res, next) => {
 
 app.use(flash())
 
-app.use('/admin', adminRoutes); // /admin was added to make only admin go this route
+// app.use('/admin', adminRoutes); // /admin was added to make only admin go this route
 
-app.use(shopRoutes);
+// app.use(shopRoutes);
 
-app.use(transactionRoutes);
+// app.use(transactionRoutes);
 
-app.use(authRoutes);
+// app.use(authRoutes);
 
 // app.use(csrfProtection);
 
-app.use('/500', errorController.get500)
+// app.use('/500', errorController.get500)
 
-app.use('/', errorController.get404);
+// app.use('/', errorController.get404);
 
 // app.use((error, req, res, next) => {
 //     res.redirect('/500')
