@@ -82,7 +82,7 @@ app.use(compression())
 
 app.use(morgan('combined', {stream: accessLogStream}))
 
-const adminRoutes = require('./routes/admin');
+// const adminRoutes = require('./routes/admin');
 
 // const shopRoutes = require('./routes/shop');
 
