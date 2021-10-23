@@ -214,11 +214,11 @@ deleteProduct = (req, res, next) => {
 }
 
 module.exports = {
-    getAddProduct :(){},
-    getAdminProductList:(){},
-    postAddProduct: (){ },
-    getEditProduc: (){ }t,
-    postEditProduct: (){ },
-    deleteProduct: (){ }
+    getAddProduct,
+    getAdminProductList,
+    postAddProduct,
+    getEditProduct,
+    postEditProduct,
+    deleteProduct
 }
 
