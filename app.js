@@ -110,7 +110,7 @@ app.use((req, res, next) => {
 
 app.use(flash())
 
-app.use('/admin', adminRoutes); //admin was added to make only admin go this route
+// app.use('/admin', adminRoutes); //admin was added to make only admin go this route
 
 // app.use(shopRoutes);
 
